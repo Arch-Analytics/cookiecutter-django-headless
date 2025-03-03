@@ -8,7 +8,7 @@ from django.urls import path
 router = DefaultRouter() if settings.DEBUG else SimpleRouter()
 
 # API urls for viewsets go here
-#router.register("users", UserViewSet)
+# router.register("users", UserViewSet)
 
 # Your Stuff: additional api routes go here (not using viewsets)
 urlpatterns = [

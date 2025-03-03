@@ -1,0 +1,8 @@
+{
+  "exclude": ["*"],
+  "ignore": ["*"],
+  "useLibraryCodeForTypes": false,
+  "reportMissingImports": false,
+  "reportMissingModuleSource": false,
+  "reportSyntaxError": false
+}

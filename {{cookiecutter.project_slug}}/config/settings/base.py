@@ -1,11 +1,12 @@
 # ruff: noqa: ERA001, E501
 """Base settings to build other settings files upon."""
 
-import environ
-from pathlib import Path
+{% if cookiecutter.use_celery == 'y' -%}
 import ssl
-{ % if cookiecutter.use_celery == 'y' - %}
 {%- endif %}
+from pathlib import Path
+
+import environ
 
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
@@ -48,7 +49,7 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-{ % if cookiecutter.use_docker == "y" - %}
+{% if cookiecutter.use_docker == "y" -%}
 DATABASES = {"default": env.db("DATABASE_URL")}
 {%- else %}
 DATABASES = {
@@ -84,15 +85,15 @@ DJANGO_APPS = [
 ]
 THIRD_PARTY_APPS = [
     "crispy_forms",
-    {%- if cookiecutter.use_celery == 'y' % }
+    {%- if cookiecutter.use_celery == 'y' %}
     "django_celery_beat",
-    {%- endif % }
-    {%- if cookiecutter.use_drf == "y" % }
+    {%- endif %}
+    {%- if cookiecutter.use_drf == "y" %}
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
     "drf_spectacular",
-    {%- endif % }
+    {%- endif %}
 ]
 
 LOCAL_APPS = [
@@ -145,12 +146,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    {%- if cookiecutter.use_drf == 'y' % }
+    {%- if cookiecutter.use_drf == 'y' %}
     "corsheaders.middleware.CorsMiddleware",
-    {%- endif % }
-    {%- if cookiecutter.use_whitenoise == 'y' % }
+    {%- endif %}
+    {%- if cookiecutter.use_whitenoise == 'y' %}
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    {%- endif % }
+    {%- endif %}
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -275,7 +276,7 @@ REDIS_URL = env(
     "REDIS_URL", default="redis://{% if cookiecutter.use_docker == 'y' %}redis{%else%}localhost{% endif %}:6379/0")
 REDIS_SSL = REDIS_URL.startswith("rediss://")
 
-{ % if cookiecutter.use_celery == 'y' - %}
+{% if cookiecutter.use_celery == 'y' -%}
 # Celery
 # ------------------------------------------------------------------------------
 if USE_TZ:
@@ -319,7 +320,7 @@ CELERY_WORKER_HIJACK_ROOT_LOGGER = False
 
 {%- endif %}
 
-{ % if cookiecutter.use_drf == "y" - %}
+{% if cookiecutter.use_drf == "y" -%}
 # django-rest-framework
 # -------------------------------------------------------------------------------
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
